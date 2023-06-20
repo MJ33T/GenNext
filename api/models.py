@@ -16,9 +16,9 @@ class Task(models.Model):
         return self
     
 class Comment(models.Model):
-    task = models.ForeignKey(Task, on_delete=models.CASCADE)
     commenter_name = models.CharField(max_length=100)
     comment_text = models.TextField()
+    tas_id = models.ForeignKey(Task, on_delete=models.CASCADE, default= 0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

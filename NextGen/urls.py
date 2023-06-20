@@ -15,11 +15,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
-from api.views import CommentDetailAPIView, CommentCreateAPIView, RegisterUserAPIView, TaskAssignAPIView, TaskCreateAPIView, TaskDetailAPIView, TaskFilterByCompletionAPIView, TaskFilterByDueDateAPIView, TaskFilterByUserAPIView, TaskListAPIView, TaskUpdateAssignedUserAPIView, UserDetailAPIView, UserTaskListAPIView
+from rest_framework_swagger.views import get_swagger_view
+from api.views import CommentDetailAPIView, CommentCreateAPIView, CommentListAPIView, RegisterUserAPIView, TaskAssignAPIView, TaskCreateAPIView, TaskDetailAPIView, TaskFilterByCompletionAPIView, TaskFilterByDueDateAPIView, TaskFilterByUserAPIView, TaskListAPIView, TaskUpdateAssignedUserAPIView, UserDetailAPIView, UserTaskListAPIView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
+schema_view = get_swagger_view(title='GenNext')
+
 urlpatterns = [
-    # Other URL patterns
+    
+    path('/apis', schema_view),
+
     path('api/register/', RegisterUserAPIView.as_view(), name='register'),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
@@ -41,8 +46,8 @@ urlpatterns = [
     path('api/tasks/sort/', TaskListAPIView.as_view(), name='task-sort'),
 
     path('api/comment/create/', CommentCreateAPIView.as_view(), name='comment-create'),
-    path('api/comment/', CommentDetailAPIView.as_view(), name='comment-list'),
-    path('api/Comment/<int:pk>/', CommentDetailAPIView.as_view(), name='comment-detail'),
+    path('api/comment/', CommentListAPIView.as_view(), name='comment-list'),
+    path('api/comment/<int:pk>/', CommentDetailAPIView.as_view(), name='comment-detail'),
 
 
     

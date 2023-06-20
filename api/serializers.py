@@ -18,14 +18,8 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         user = User(**validated_data)
         user.set_password(password)
         user.save()
-
-        refresh = RefreshToken.for_user(user)
-        tokens = {
-            'refresh': str(refresh),
-            'access': str(refresh.access_token),
-        }
-
-        return tokens
+        
+        return user
         
     
 class TaskSerializer(serializers.ModelSerializer):

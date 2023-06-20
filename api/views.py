@@ -11,6 +11,8 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+
+
 class RegisterUserAPIView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserRegistrationSerializer
@@ -187,4 +189,11 @@ class CommentDetailAPIView(APIView):
             comment.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+class CommentListAPIView(APIView):
+    def get(self, request):
+        tasks = Comment.objects.all()
+        serializer = CommentSerializer(tasks, many=True)
+        return Response(serializer.data)
+
 
